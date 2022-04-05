@@ -42,7 +42,8 @@ public:
     bool supprimer (int);
     bool modifier(int);
     void RechercherCommandes(int id_chech);
-
+    QSqlQueryModel* statistiques();
+    void notifcation();
 
 
 

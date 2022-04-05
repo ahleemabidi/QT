@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QPushButton" name="buttonAjout">
@@ -199,7 +199,7 @@
          <string/>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_12">
+       <widget class="QPushButton" name="qrCode">
         <property name="geometry">
          <rect>
           <x>740</x>
@@ -217,7 +217,7 @@
          <rect>
           <x>35</x>
           <y>81</y>
-          <width>951</width>
+          <width>491</width>
           <height>251</height>
          </rect>
         </property>
@@ -246,6 +246,19 @@
         </property>
         <property name="text">
          <string>Recherche</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="qr_code">
+        <property name="geometry">
+         <rect>
+          <x>680</x>
+          <y>80</y>
+          <width>251</width>
+          <height>221</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </widget>
@@ -430,11 +443,34 @@
        <attribute name="title">
         <string>Statistiques</string>
        </attribute>
+       <widget class="QTableView" name="tableView_3">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>30</y>
+          <width>611</width>
+          <height>411</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
         <string>SMS</string>
        </attribute>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>430</x>
+          <y>40</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Envoyer SMS</string>
+        </property>
+       </widget>
       </widget>
      </widget>
      <widget class="QStackedWidget" name="stackedWidget_2">

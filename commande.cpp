@@ -90,3 +90,12 @@ else
               DateC=query2.value(3).toInt();
            }
      }
+
+     QSqlQueryModel* Commande::statistiques()
+     {
+         QSqlQueryModel* model= new QSqlQueryModel();
+         model->setQuery("SELECT DATEC, COUNT(ID_C) FROM COMMANDE GROUP BY DATEC");
+         model->setHeaderData(0,Qt::Horizontal,QObject::tr("date"));
+         model->setHeaderData(1,Qt::Horizontal,QObject::tr("Number"));
+         return model;
+     }

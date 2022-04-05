@@ -29,12 +29,14 @@ SOURCES += \
     commande.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    qrcode.cpp
 
 HEADERS += \
     commande.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    qrcode.h
 
 FORMS += \
         mainwindow.ui

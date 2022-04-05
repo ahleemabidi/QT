@@ -56,6 +56,8 @@ private slots:
 
     void on_order_clicked();
 
+    void on_qrCode_clicked();
+
 private:
     Ui::MainWindow *ui;
     Commande C;

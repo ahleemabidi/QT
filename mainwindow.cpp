@@ -31,6 +31,11 @@
 #include <QValidator>
 #include<QtSql/QSqlQuery>
 #include<QVariant>
+#include <QSystemTrayIcon>
+#include"qrcode.h"
+#include<QPixmap>
+using namespace  qrcodegen;
+using namespace  std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,10 +43,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tableView->setModel(C.afficher("",0));
+    ui->tableView_3->setModel(C.statistiques());
+    ui->tableView_2->setModel(C.afficher("",0));
     ui->lineEdit_5->setText("");
     ui->stackedWidget->setCurrentWidget(ui->page_2);
     ui->order->setText("décrementé");
     ord=0;
+
 }
 
 MainWindow::~MainWindow()
@@ -93,6 +101,12 @@ void MainWindow::on_buttonAjout_clicked()
                                 "Click Cancel to exit."), QMessageBox::Cancel);
    ui->tableView->setModel(C.afficher("",ord));
    ui->lineEdit_5->setText("");
+
+   QSystemTrayIcon *notifyIcon = new QSystemTrayIcon;
+           notifyIcon->show();
+
+
+          notifyIcon->showMessage("Ajouter ","Commande est bien confirmer avec succèses",QSystemTrayIcon::Information,15000);
 
 }
     else
@@ -199,7 +213,8 @@ C.setDateC(ui->le_date_modif->text());
 
 void MainWindow::on_pushButton_3_clicked()
 {
-
+    QString link="https://web.whatsapp.com/";
+           QDesktopServices::openUrl(link);
 }
 
 void MainWindow::on_pushButton_21_clicked()
@@ -219,4 +234,52 @@ void MainWindow::on_order_clicked()
         ord=0;}
          ui->tableView->setModel(C.afficher(ui->lineEdit_5->text(),ord));
 
+}
+
+
+
+void MainWindow::on_qrCode_clicked()
+{
+    int tabeq=ui->tableView->currentIndex().row();
+                 QVariant idd=ui->tableView->model()->data(ui->tableView->model()->index(tabeq,0));
+                 QString id_c=idd.toString();
+                // QString code=idd.toSTring();
+                 QSqlQuery qry;
+                 qry.prepare("select * from COMMANDE where id_c=:code");
+                 qry.bindValue(":code",id_c);
+                 qry.exec();
+
+                  QString DateC;//attributs
+                  int prix,quantite;
+
+
+                while(qry.next()){
+
+                    id_c=qry.value(1).toString();
+                     prix=qry.value(3).toInt();
+                     quantite=qry.value(4).toInt();
+                     DateC=qry.value(6).toString();
+
+
+
+                 }
+                 id_c=QString(id_c);
+                        id_c="CODE:\t" +id_c+ "PRIX\t:" +prix+ "QUANTITE:\t" +quantite+ "DateC:\t" +DateC ;
+                 QrCode qr = QrCode::encodeText(id_c.toUtf8().constData(), QrCode::Ecc::HIGH);
+
+                 // Read the black & white pixels
+                 QImage im(qr.getSize(),qr.getSize(), QImage::Format_RGB888);
+                 for (int y = 0; y < qr.getSize(); y++) {
+                     for (int x = 0; x < qr.getSize(); x++) {
+                         int color = qr.getModule(x, y);  // 0 for white, 1 for black
+
+                         // You need to modify this part
+                         if(color==0)
+                             im.setPixel(x, y,qRgb(254, 254, 254));
+                         else
+                             im.setPixel(x, y,qRgb(0, 0, 0));
+                     }
+                 }
+                 im=im.scaled(200,200);
+                 ui->qr_code->setPixmap(QPixmap::fromImage(im));
 }
